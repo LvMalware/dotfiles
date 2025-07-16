@@ -13,12 +13,13 @@ general {
 
 #order += "ipv6"
 #order += "disk /"
+order += "volume all"
 order += "cpu_usage"
-order += "wireless _first_"
-order += "battery all"
+order += "ethernet _first_"
+#order += "wireless _first_"
+#order += "battery all"
 #order += "load"
 order += "tztime local"
-order += "volume all"
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
         format_down = "W: down"

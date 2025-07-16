@@ -84,11 +84,15 @@ bindsym Mod1+Return exec i3-sensible-terminal
 bindsym Mod1+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym Mod1+d exec dmenu_run
+# bindsym Mod1+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+
+
+gaps inner 4
+gaps outer 2
 
 # change focus
 bindsym Mod1+$left focus left
@@ -241,10 +245,10 @@ set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) re
 mode "$mode_system" {
     bindsym l exec --no-startup-id $i3lockwall, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $i3lockwall && loginctl suspend, mode "default"
-    bindsym h exec --no-startup-id $i3lockwall && loginctl hibernate, mode "default"
-    bindsym r exec --no-startup-id loginctl reboot, mode "default"
-    bindsym Ctrl+s exec --no-startup-id loginctl poweroff -i, mode "default"
+    bindsym s exec --no-startup-id $i3lockwall && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $i3lockwall && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -253,17 +257,24 @@ mode "$mode_system" {
 
 # workspace_layout default
 
-hide_edge_borders both
+#hide_edge_borders smart
 default_border pixel 2
 default_floating_border pixel 2
 popup_during_fullscreen smart
 
 # class                 border  backgr. text    indicator child_border
-#client.focused          #00FF00 #00FF00 #000000 #285577
-#client.focused_inactive #333333 $background $foreground #484e50
-#client.unfocused        #00FF00 #000000 #00FF00 #285577
-#client.urgent           $red1   $red1   $white2 $red1     $red1
-#client.placeholder      #000000 #0c0c0c $white2 #000000   #0c0c0c
+client.focused          #005500 #005500 #000000 #285577
+client.focused_inactive #333333 $background $foreground #484e50
+client.unfocused        #00FF00 #000000 #00FF00 #285577
+client.urgent           $red1   $red1   $white2 $red1     $red1
+client.placeholder      #000000 #0c0c0c $white2 #000000   #0c0c0c
+
+#                       border     background   text       indicator
+#client.focused           #ca9ee6 #ca9ee6 #1e1e2e  #ca9ee6 #ca9ee6
+#client.focused_inactive  #6c7086 #1e1e2e #cdd6f4  #ca9ee6 #6c7086
+#client.unfocused         #6c7086 #1e1e2e #cdd6f4  #ca9ee6 #6c7086
+#client.urgent            #ca9ee6    #1e1e2e #ca9ee6 #6c7086  #ca9ee6
+#client.placeholder       #6c7086 #1e1e2e #cdd6f4  #6c7086  #6c7086
 
 bindsym $mod+BackSpace mode "$mode_system"
 
@@ -273,14 +284,18 @@ for_window [window_role="task_dialog"] floating enable
 #for_window [class="URxvt"] floating enable
 for_window [floating] sticky disable
 
-#exec --no-startup-id picom -CG -b
+exec --no-startup-id picom -CG -b
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id synclient TouchpadOff=1
 exec --no-startup-id pulseaudio
 exec --no-startup-id dunst
 exec --no-startup-id lxpolkit
+exec --no-startup-id mate-settings-daemon
+exec --no-startup-id x-terminal-emulator
+#exec --no-startup-id mate-volume-control-status-icon
+#exec --no-startup-id nm-applet
 #exec --no-startup-id alttab
-exec --no-startup-id sh $HOME/.config/i3/lock.sh
+#exec --no-startup-id sh $HOME/.config/i3/lock.sh
 
 bindsym Mod4+p exec --no-startup-id x-terminal-emulator -e iperl
 bindsym Mod4+w exec --no-startup-id firefox
